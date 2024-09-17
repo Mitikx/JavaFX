@@ -9,11 +9,11 @@
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
 
-    <Label fx:id="erreurLabel" text="BIENVENUE" />
+    <Label fx:id="erreurLabel" text=" " />
    <Label layoutX="40.0" layoutY="67.0" text="Votre adresse mail" />
-   <TextField />
+   <TextField fx:id="mailField" />
    <Label layoutX="40.0" layoutY="149.0" text="Votre mot de passe" />
-   <PasswordField />
+   <PasswordField fx:id="passwordField" />
    <Label layoutX="40.0" layoutY="186.0" />
     <Button onAction="#onConnexionButtonCLick" text="Connexion" />
    <Button onAction="#onMdpOublieButtonClick" text="Mot de passe oublié" />

@@ -5,18 +5,20 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
 
 public class LoginController {
+    public Label erreurLabel;
     @FXML
-    private Label erreurLabel;
-    private Button inscriptionLabel;
-    private Button mdpOublieLabel;
-    private Button connexionLabel;
-    private Field passwordField;
-    private Field mailField;
+    private Button connexionButton;
+    @FXML
+    private TextField mailField;
+    @FXML
+    private TextField passwordField;
+
 
 
     @FXML
@@ -26,11 +28,12 @@ public class LoginController {
 
     @FXML
     protected void onMdpOublieButtonClick() {
-        System.out.println(passwordField);
-    }
+        System.out.println(passwordField.getText());
+}
 
     @FXML
     protected void onConnexionButtonCLick() {
-        System.out.println("Connexion");
+        String mail = mailField.getText();
+        String password = passwordField.getText();
     }
 }
