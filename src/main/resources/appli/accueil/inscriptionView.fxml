@@ -12,6 +12,7 @@
       <TextField fx:id="mailField" layoutX="225.0" layoutY="157.0" />
       <PasswordField fx:id="passwordField" layoutX="225.0" layoutY="215.0" />
       <PasswordField fx:id="passwordConfirmationField" layoutX="226.0" layoutY="271.0" />
+      <Label fx:id="labelErreur" layoutX="230.0" layoutY="250.0" />
       <Label layoutX="286.0" layoutY="21.0" text="Nom" />
       <Label layoutX="278.0" layoutY="77.0" text="Prenom" />
       <Label layoutX="284.0" layoutY="134.0" text="Email" />

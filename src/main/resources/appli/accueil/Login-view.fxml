@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="appli.accueil.LoginController">
+<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="appli.accueil.InscriptionController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
 
-    <Label fx:id="erreurLabel" text=" " />
-   <Label layoutX="40.0" layoutY="67.0" text="Votre adresse mail" />
-   <TextField fx:id="mailField" />
-   <Label layoutX="40.0" layoutY="149.0" text="Votre mot de passe" />
-   <PasswordField fx:id="passwordField" />
-   <Label layoutX="40.0" layoutY="186.0" />
-    <Button onAction="#onConnexionButtonCLick" text="Connexion" />
-   <Button onAction="#onMdpOublieButtonClick" text="Mot de passe oublié" />
-   <Button onAction="#onInscriptionButtonClick" text="Inscription" />
+    <Label fx:id="labelErreur" text=" " />
+    <Label text="Votre adresse mail" />
+    <TextField fx:id="mailField" />
+    <Label text="Votre mot de passe" />
+    <PasswordField fx:id="passwordField" />
+    <Button onAction="#onConnexionButtonClick" text="Connexion" />
+    <Button onAction="#onMdpOublieButtonClick" text="Mot de passe oublié" />
+    <Button onAction="#onInscriptionButtonClick" text="Inscription" />
 </VBox>
