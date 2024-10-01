@@ -1,39 +1,42 @@
 package appli.accueil;
 
 import appli.StartApplication;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import model.User;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import repository.UtilisateurRepository;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
 
 public class LoginController {
-    public Label erreurLabel;
-    @FXML
-    private Button connexionButton;
+
     @FXML
     private TextField mailField;
     @FXML
-    private TextField passwordField;
-
-
+    private PasswordField passwordField;
+    @FXML
+    private Label labelErreur;
 
     @FXML
-    protected void onInscriptionButtonClick() throws IOException {
-        StartApplication.changeScene("accueil/inscriptionView.fxml");
+    public void onConnexionButtonClick() throws IOException {
+        String email = mailField.getText();
+        String motDePasse = passwordField.getText();
+
+        UtilisateurRepository utilisateurRepository = new UtilisateurRepository();
+        User utilisateur = utilisateurRepository.getUtilisateurByEmail(email);
+
+        if (utilisateur != null && BCrypt.checkpw(motDePasse, utilisateur.getMotDePasse())) {
+            StartApplication.changeScene("accueil/AcceuilView.fxml");
+        } else {
+            labelErreur.setText("Erreur, email ou mot de passe incorrect !");
+        }
     }
 
     @FXML
-    protected void onMdpOublieButtonClick() {
-        System.out.println(passwordField.getText());
-}
-
-    @FXML
-    protected void onConnexionButtonCLick() {
-        String mail = mailField.getText();
-        String password = passwordField.getText();
+    public void onInscriptionButtonClick() throws IOException {
+        StartApplication.changeScene("accueil/InscriptionView.fxml");
     }
 }

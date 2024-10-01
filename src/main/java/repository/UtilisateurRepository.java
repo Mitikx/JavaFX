@@ -1,48 +1,56 @@
 package repository;
 
-import model.user;
-import appli.database.database;
+import model.User;
+import appli.database.Database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class UtilisateurRepository {
 
-    public boolean inscription(user utilisateur) {
+    private Connection connection;
+
+    public UtilisateurRepository() {
+        this.connection = Database.getConnection();
+    }
+    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+    public boolean inscription(User utilisateur) {
+        if (getUtilisateurByEmail(utilisateur.getEmail()) != null) {
+            return false;
+        }
         String sql = "INSERT INTO utilisateur (nom, prenom, email, mot_de_passe) VALUES (?, ?, ?, ?)";
-        try (Connection cnx = database.getConnection();
-             PreparedStatement st = cnx.prepareStatement(sql)) {
+        Connection cnx = Database.getConnection();
+        try {
+            PreparedStatement st = cnx.prepareStatement(sql);
             st.setString(1, utilisateur.getNom());
             st.setString(2, utilisateur.getPrenom());
             st.setString(3, utilisateur.getEmail());
             st.setString(4, utilisateur.getMotDePasse());
-            st.executeUpdate();
-            return true;
+            int rowsInserted = st.executeUpdate();
+            return rowsInserted > 0;
         } catch (SQLException e) {
-            if (e instanceof SQLIntegrityConstraintViolationException) {
-                System.out.println("Duplicate email detected: " + utilisateur.getEmail());
-            } else {
-                e.printStackTrace();
-            }
-            return false;
+            e.printStackTrace();
         }
+        return false;
     }
-    public user getUtilisateurByEmail(String email) {
-        String sql = "SELECT * FROM utilisateur WHERE email = ?";
-        try (Connection cnx = database.getConnection();
-             PreparedStatement st = cnx.prepareStatement(sql)) {
-            st.setString(1, email);
-            ResultSet rs = st.executeQuery();
-            if (rs.next()) {
-                return new user(
-                        rs.getInt("id"),
-                        rs.getString("nom"),
-                        rs.getString("prenom"),
-                        rs.getString("email"),
-                        rs.getString("motDePasse")
-                );
+
+    public User getUtilisateurByEmail(String email) {
+        String query = "SELECT id_utilisateur, nom, prenom, email, mot_de_passe FROM utilisateur WHERE email = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, email);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return new User(
+                            resultSet.getInt("id_utilisateur"),
+                            resultSet.getString("nom"),
+                            resultSet.getString("prenom"),
+                            resultSet.getString("email"),
+                            resultSet.getString("mot_de_passe")
+                    );
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -5,8 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import model.user;
+import model.User;
 import repository.UtilisateurRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.io.IOException;
 
@@ -25,8 +26,10 @@ public class InscriptionController {
     @FXML
     private Label labelErreur;
 
+    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
     @FXML
-    public void onInscriptionButtonClick() {
+    public void onInscriptionButtonClick() throws IOException {
         String nom = nomField.getText();
         String prenom = prenomField.getText();
         String email = mailField.getText();
@@ -48,8 +51,8 @@ public class InscriptionController {
             labelErreur.setText("Erreur, un compte avec cet email existe déjà !");
             return;
         }
-
-        user utilisateur = new user(0, nom, prenom, email, motDePasse);
+        String pEncode = passwordEncoder.encode(motDePasse);
+        User utilisateur = new User(0, nom, prenom, email, pEncode);
         boolean success = utilisateurRepository.inscription(utilisateur);
 
         if (success) {
@@ -60,32 +63,13 @@ public class InscriptionController {
             passwordField.clear();
             passwordConfirmationField.clear();
         } else {
-            labelErreur.setText("Erreur, un compte avec cet email existe déjà !");
+            labelErreur.setText("Erreur Email déjà utilisé !");
         }
-    }
-
-    @FXML
-    public void onConnexionButtonClick() throws IOException {
-        String email = mailField.getText();
-        String motDePasse = passwordField.getText();
-
-        UtilisateurRepository utilisateurRepository = new UtilisateurRepository();
-        user utilisateur = utilisateurRepository.getUtilisateurByEmail(email);
-
-        if (utilisateur != null && utilisateur.getMotDePasse().equals(motDePasse)) {
-            StartApplication.changeScene("accueil/AccueilView.fxml");
-        } else {
-            labelErreur.setText("Erreur, email ou mot de passe incorrect !");
-        }
+        StartApplication.changeScene("accueil/Login-view.fxml");
     }
 
     @FXML
     public void onRetourButtonClick() throws IOException {
         StartApplication.changeScene("accueil/Login-view.fxml");
-    }
-
-    @FXML
-    public void onMdpOublieButtonClick() {
-        labelErreur.setText("Désolé, cette fonctionnalité n'est pas encore implémentée !");
     }
 }

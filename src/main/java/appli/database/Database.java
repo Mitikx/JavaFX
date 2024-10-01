@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class database {
+public class Database {
 
     private static String serveur = "localhost";
     private static String nomDelaBase = "todolist";

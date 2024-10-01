@@ -8,6 +8,7 @@ module appli.todolistfx {
     requires com.dlsc.formsfx;
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
+    requires spring.security.crypto;
 
     opens appli to javafx.fxml;
     exports appli;

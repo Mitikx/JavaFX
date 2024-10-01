@@ -1,13 +1,13 @@
 package model;
 
-public class user {
+public class User {
     private int id;
     private String nom;
     private String prenom;
     private String email;
     private String MotDePasse;
 
-    public user(int id, String nom, String prenom, String email, String MotDePasse) {
+    public User(int id, String nom, String prenom, String email, String MotDePasse) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
