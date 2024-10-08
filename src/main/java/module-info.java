@@ -12,8 +12,9 @@ module appli.todolistfx {
 
     opens appli to javafx.fxml;
     exports appli;
+    opens appli.liste to javafx.fxml;
     exports appli.accueil;
     opens appli.accueil to javafx.fxml;
-    exports appli.database;
-    opens appli.database to javafx.fxml;
+    exports database;
+    opens database to javafx.fxml;
 }

@@ -1,7 +1,7 @@
 package repository;
 
 import model.User;
-import appli.database.Database;
+import database.Database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,9 +15,9 @@ public class UtilisateurRepository {
     public UtilisateurRepository() {
         this.connection = Database.getConnection();
     }
-    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public boolean inscription(User utilisateur) {
+
         if (getUtilisateurByEmail(utilisateur.getEmail()) != null) {
             return false;
         }

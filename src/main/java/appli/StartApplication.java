@@ -2,6 +2,7 @@ package appli;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -26,6 +27,21 @@ public class StartApplication extends Application {
         mainStage.setScene(scene);
         mainStage.show();
     }
+
+    public static void changerSceneController(String fxmlFile, Object controller) throws IOException {
+        mainStage.close();
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(StartApplication.class.getResource(fxmlFile));
+            fxmlLoader.setController(controller);
+            Parent root = fxmlLoader.load();
+            Scene scene = new Scene(root);
+            mainStage.setScene(scene);
+            mainStage.show();
+        }catch (IOException e){
+            System.err.println(String.format("Erreur lors du chargement de la vue %s", e.getMessage()));
+        }
+    }
+
     public static void main(String[] args) {
         launch();
     }
